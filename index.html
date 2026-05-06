@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>NFC Keys – L'efficacité au service de vos droits</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0a1628;--gold:#c9a227;--gold-l:#f0c940;--gold-p:#f5dfa0;--white:#fff;--dim:#d4c5a9}
+body{font-family:'Poppins',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden}
+a{text-decoration:none}
+header{position:fixed;top:0;left:0;right:0;z-index:99;background:rgba(10,22,40,.97);backdrop-filter:blur(8px);border-bottom:1px solid rgba(201,162,39,.3);padding:.8rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--gold-l)}
+.logo span{color:#fff}
+nav{display:flex;gap:1rem;flex-wrap:wrap}
+nav a{color:var(--dim);font-size:.82rem;font-weight:500;transition:color .2s}
+nav a:hover{color:var(--gold-l)}
+.hero{min-height:100vh;background:radial-gradient(ellipse at top,#1a3260,transparent 60%),radial-gradient(ellipse at bottom right,#1c2e55,transparent 55%),var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 1.5rem 4rem;position:relative}
+.flag{position:absolute;top:5.5rem;right:1.5rem;width:65px;border-radius:4px}
+.lock{font-size:2.8rem;margin-bottom:.8rem;filter:drop-shadow(0 0 18px rgba(201,162,39,.7))}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,3.5rem);font-weight:700;line-height:1.15;text-transform:uppercase;letter-spacing:.03em}
+h1 em{font-style:italic;color:var(--gold-l);font-size:1.15em}
+.sub{font-family:'Playfair Display',serif;font-style:italic;font-size:1.1rem;color:var(--gold-p);margin-top:1rem}
+.cta{margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.btn-g{background:linear-gradient(135deg,var(--gold),var(--gold-l));color:var(--navy);font-weight:700;font-size:.95rem;padding:.8rem 2rem;border-radius:50px;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(201,162,39,.4);transition:transform .2s}
+.btn-g:hover{transform:translateY(-2px)}
+.btn-o{background:transparent;color:var(--gold-l);font-weight:600;font-size:.95rem;padding:.8rem 2rem;border-radius:50px;border:2px solid var(--gold);transition:background .2s}
+.btn-o:hover{background:rgba(201,162,39,.12)}
+.divider{height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+section{padding:4rem 1.5rem}
+.sec-title{display:block;text-align:center;font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.2rem);color:var(--gold-l);margin-bottom:2.5rem}
+.sec-title::after{content:'';display:block;width:55px;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-l));border-radius:2px;margin:.5rem auto 0}
+.srv-bg{background:radial-gradient(ellipse at center,#101f3a,var(--navy) 70%)}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem;max-width:1100px;margin:0 auto}
+.srv-card{background:rgba(255,255,255,.05);border:1px solid rgba(201,162,39,.25);border-radius:14px;padding:1.2rem .8rem;text-align:center;cursor:pointer;transition:all .25s;display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.srv-card:hover{background:rgba(201,162,39,.12);border-color:var(--gold);transform:translateY(-3px);box-shadow:0 8px 25px rgba(201,162,39,.2)}
+.srv-card .ico{font-size:1.8rem}
+.srv-card .name{font-weight:600;font-size:.85rem;color:var(--white);line-height:1.3}
+.srv-card .price{font-size:.78rem;color:var(--gold-l);font-weight:700}
+.srv-card .tap{font-size:.7rem;color:rgba(255,255,255,.35)}
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal{background:linear-gradient(160deg,#0d1f3c,#0a1628);border:1px solid rgba(201,162,39,.4);border-radius:18px;max-width:550px;width:100%;max-height:90vh;overflow-y:auto;padding:2rem 1.5rem;position:relative}
+.modal-close{position:absolute;top:1rem;right:1rem;background:rgba(201,162,39,.15);border:1px solid rgba(201,162,39,.3);color:var(--gold-l);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center}
+.modal-icon{font-size:2.5rem;text-align:center;margin-bottom:.5rem}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--gold-l);text-align:center;margin-bottom:.3rem}
+.modal-price{text-align:center;font-size:1.1rem;font-weight:700;color:var(--gold-l);background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.3);border-radius:30px;padding:.3rem 1rem;width:fit-content;margin:0 auto .8rem;display:block}
+.modal-badge{background:#8b0000;color:#fff;font-family:'Playfair Display',serif;font-style:italic;font-size:.9rem;text-align:center;padding:.4rem 1rem;border-radius:6px;margin-bottom:1.2rem}
+.modal-item{display:flex;align-items:flex-start;gap:.6rem;padding:.5rem .7rem;background:rgba(255,255,255,.04);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;margin-bottom:.4rem;font-size:.88rem;line-height:1.4}
+.modal-note{font-family:'Playfair Display',serif;font-style:italic;font-size:.85rem;color:var(--gold-p);text-align:center;margin-top:1rem;padding:.7rem;border-top:1px solid rgba(201,162,39,.2)}
+.modal-contact{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-top:1.2rem}
+.modal-contact a{background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.3);color:var(--gold-p);padding:.4rem .9rem;border-radius:20px;font-size:.8rem}
+.sub-section{background:rgba(255,255,255,.03);border-radius:10px;padding:.8rem;margin-bottom:.8rem}
+.sub-section-title{font-size:.82rem;font-weight:700;color:var(--gold);margin-bottom:.5rem}
+.tags{background:rgba(255,255,255,.03);border-top:1px solid rgba(201,162,39,.2);border-bottom:1px solid rgba(201,162,39,.2);padding:2rem 1.5rem;text-align:center}
+.tags p{font-family:'Playfair Display',serif;font-style:italic;font-size:1.05rem;color:var(--gold-p);margin:.3rem 0}
+.cnt-bg{background:linear-gradient(180deg,var(--navy),#071020)}
+.contact-cards{display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;max-width:800px;margin:0 auto}
+.c-card{background:rgba(255,255,255,.05);border:1px solid rgba(201,162,39,.3);border-radius:14px;padding:1.3rem 1.8rem;text-align:center;flex:1;min-width:180px;transition:all .2s}
+.c-card:hover{border-color:var(--gold);transform:translateY(-3px)}
+.c-card .ci{font-size:1.8rem;margin-bottom:.4rem}
+.c-card a{color:var(--gold-p);font-size:.95rem;font-weight:500}
+.clbl{font-size:.75rem;color:rgba(255,255,255,.4);margin-bottom:.3rem}
+footer{background:#050e1c;border-top:2px solid rgba(201,162,39,.3);text-align:center;padding:1.3rem;font-family:'Playfair Display',serif;font-style:italic;color:var(--dim)}
+footer span{color:var(--gold-l)}
+@media(max-width:600px){nav{display:none}.cards-grid{grid-template-columns:repeat(2,1fr)}.flag{width:45px;top:5rem}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🔑 NFC <span>Keys</span></div>
+  <nav>
+    <a href="#services">Documents</a>
+    <a href="#droits">Vos Droits</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <svg class="flag" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600">
+    <rect width="300" height="600" fill="#007a5e"/>
+    <rect x="300" width="300" height="600" fill="#ce1126"/>
+    <rect x="600" width="300" height="600" fill="#fcd116"/>
+    <polygon points="450,180 468,234 525,234 480,266 496,320 450,290 404,320 420,266 375,234 432,234" fill="#fcd116"/>
+  </svg>
+  <div class="lock">🔒</div>
+  <h1>L'Efficacité<br/>Au Service De Vos <em>droits</em></h1>
+  <p class="sub">Donne une existence légale à ton engagement !</p>
+  <div class="cta">
+    <a href="#contact" class="btn-g">Nous Contacter</a>
+    <a href="#services" class="btn-o">Nos Services</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="srv-bg" id="services">
+  <span class="sec-title">📄 Documents</span>
+  <div class="cards-grid">
+    <div class="srv-card" onclick="openModal('passeport')"><div class="ico">🛂</div><div class="name">Passeport</div><div class="price">120 000 F</div><div class="tap">Appuyer pour les détails</div></div>
+    <div class="srv-card" onclick="openModal('cni')"><div class="ico">🪪</div><div class="name">CNI</div><div class="price">19 500 FCFA</div><div class="tap">Appuyer pour les détails</div></div>
+    <div class="srv-card" onclick="openModal('naissance')"><div class="ico">📋</div><div class="name">Acte de Naissance</div><div class="tap">Appuyer pour les détails</div></div>
+    <div class="srv-card" onclick="openModal('diplomes')"><div class="ico">🎓</div><div class="name">Diplômes</div><div class="tap">Appuyer pour les détails</div></div>
+    <div class="srv-card" onclick="openModal('bail')"><div class="ico">🏠</div><div class="name">Le Bail</div><div class="tap">Appuyer pour les détails</div></div>
+    <div class="srv-card" onclick="openModal('duplicatas')"><div class="ico">📑</div><div class="name">Duplicatas</div><div class="tap">Appuyer pour les détails</div></div>
+    <div class="srv-card" onclick="openModal('rccm')"><div class="ico">🏢</div><div class="name">RCCM</div><div class="tap">Appuyer pour les détails</div></div>
+    <div class="srv-card" onclick="openModal('licence')"><div class="ico">📜</div><div class="name">Licence / Autorisation d'exercice</div><div class="tap">Appuyer pour les détails</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="srv-bg" id="droits">
+  <span class="sec-title">⚖️ Vos Droits</span>
+  <div class="cards-grid">
+    <div class="srv-card" onclick="openModal('mariage')"><div class="ico">💍</div><div class="name">Acte de Mariage</div><div class="price">60 000 FCFA</div><div class="tap">Appuyer pour les détails</div></div>
+    <div class="srv-card" onclick="openModal('impot')"><div class="ico">🧾</div><div class="name">Impôt</div><div class="tap">Appuyer pour les détails</div></div>
+    <div class="srv-card" onclick="openModal('legalisation')"><div class="ico">✅</div><div class="name">Légalisation d'Association</div><div class="price">145 000 F</div><div class="tap">Appuyer pour les détails</div></div>
+    <div class="srv-card" onclick="openModal('certificat')"><div class="ico">📜</div><div class="name">Certificat</div><div class="tap">Appuyer pour les détails</div></div>
+    <div class="srv-card" onclick="openModal('attestation')"><div class="ico">📝</div><div class="name">Attestation de Non Redevance</div><div class="tap">Appuyer pour les détails</div></div>
+    <div class="srv-card" onclick="openModal('terrain')"><div class="ico">🏡</div><div class="name">Terrain</div><div class="tap">Appuyer pour les détails</div></div>
+    <div class="srv-card" onclick="openModal('immatriculation')"><div class="ico">🚗</div><div class="name">Immatriculation</div><div class="tap">Appuyer pour les détails</div></div>
+    <div class="srv-card" onclick="openModal('voie')"><div class="ico">🛣️</div><div class="name">Occupation Voie Publique</div><div class="price">50 000 FCFA</div><div class="tap">Appuyer pour les détails</div></div>
+    <div class="srv-card" onclick="openModal('arme')"><div class="ico">🔫</div><div class="name">Permis de Port d'Arme</div><div class="tap">Appuyer pour les détails</div></div>
+    <div class="srv-card" onclick="openModal('redaction')"><div class="ico">✍️</div><div class="name">Rédaction</div><div class="tap">Appuyer pour les détails</div></div>
+    <div class="srv-card" onclick="openModal('timbres')"><div class="ico">🔖</div><div class="name">Timbres</div><div class="tap">Appuyer pour les détails</div></div>
+  </div>
+</section>
+
+<div class="tags">
+  <p>Obtenez vos documents officiels, rapidement et en toute sécurité.</p>
+  <p>Votre temps est précieux, vos documents aussi.</p>
+</div>
+
+<div class="divider"></div>
+
+<section class="cnt-bg" id="contact">
+  <span class="sec-title">📞 Contactez-Nous</span>
+  <div class="contact-cards">
+    <div class="c-card"><div class="ci">📞</div><div class="clbl">Téléphone</div><a href="tel:+237652802253">+237 652 80 22 53</a></div>
+    <div class="c-card"><div class="ci">💬</div><div class="clbl">WhatsApp</div><a href="https://wa.me/237655608740" target="_blank">+237 655 608 740</a></div>
+    <div class="c-card"><div class="ci">✉️</div><div class="clbl">Email</div><a href="mailto:contact@nfckeys.com">contact@nfckeys.com</a></div>
+  </div>
+</section>
+
+<footer><span>NFC Keys</span> – L'efficacité au service de vos droits.</footer>
+
+<div class="modal-overlay" id="modal" onclick="closeOnOverlay(event)">
+  <div class="modal" id="modal-content">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+<script>
+const services = {
+  passeport: {
+    icon:'🛂', title:'Passeport', price:'120 000 F CFA',
+    badge:'Le nécessaire obligatoire',
+    docs:[
+      {i:'📋', t:'Acte de naissance', d:'Copie certifiée conforme (moins de 3 mois)'},
+      {i:'🪪', t:'Carte Nationale d\'Identité (CNI)', d:'Photocopie + original valide'},
+      {i:'📄', t:'Fiche de pré-enrôlement', d:'Imprimée'},
+      {i:'💍', t:'Acte de mariage', d:'Si changement de nom'},
+      {i:'👨‍👧', t:'Autorisation parentale + CNI parent', d:'Pour mineur'},
+      {i:'🏛️', t:'Décret de naturalisation', d:'Si naturalisé'},
+    ],
+    note:'C\'est un outil stratégique de mobilité et d\'opportunité.'
+  },
+  cni: {
+    icon:'🪪', title:'CNI – Carte Nationale d\'Identité', price:'19 500 FCFA',
+    badge:'Le nécessaire obligatoire',
+    docs:[
+      {i:'📋', t:'Acte de naissance légalisé', d:''},
+      {i:'📸', t:'Photos d\'identité conformes', d:''},
+      {i:'🏛️', t:'Certificat de nationalité', d:''},
+      {i:'🪪', t:'Ancienne CNI', d:'Si renouvellement'},
+      {i:'💳', t:'Paiement des frais', d:''},
+      {i:'🔬', t:'Passage biométrique', d:''},
+    ],
+    note:''
+  },
+  naissance: {
+    icon:'📋', title:'Acte de Naissance', price:'',
+    badge:'Documents obligatoires',
+    docs:[
+      {i:'📄', t:'Déclaration de naissance', d:'Faite dans les 90 jours à la mairie ou au centre d\'état civil'},
+      {i:'🪪', t:'CNI du père et de la mère', d:'Photocopies'},
+      {i:'🏥', t:'Certificat d\'accouchement', d:'Délivré par la maternité ou le médecin'},
+      {i:'💍', t:'Acte de mariage des parents', d:'Si disponible'},
+      {i:'👥', t:'Deux témoins majeurs', d:'Avec leurs pièces d\'identité'},
+    ],
+    note:'Tout enfant né au Cameroun doit être déclaré à l\'état civil.'
+  },
+  diplomes: {
+    icon:'🎓', title:'Légalisation de Diplômes', price:'',
+    badge:'Documents obligatoires',
+    docs:[
+      {i:'📜', t:'Original du diplôme', d:'À présenter obligatoirement'},
+      {i:'📋', t:'Photocopie du diplôme', d:'Plusieurs exemplaires'},
+      {i:'🪪', t:'Copie de la CNI', d:'Du titulaire'},
+      {i:'📝', t:'Demande manuscrite', d:'Adressée au Ministre compétent selon le niveau'},
+      {i:'🔖', t:'Timbre fiscal', d:'Requis pour la légalisation'},
+    ],
+    note:'La légalisation confirme l\'authenticité du diplôme auprès des autorités compétentes.'
+  },
+  bail: {
+    icon:'🏠', title:'Contrat de Bail', price:'',
+    badge:'Documents obligatoires',
+    docs:[
+      {i:'🪪', t:'CNI du bailleur et du locataire', d:'Copies + originaux'},
+      {i:'📝', t:'Contrat de bail rédigé', d:'En deux exemplaires signés par les deux parties'},
+      {i:'🏠', t:'Titre foncier ou attestation de propriété', d:'Du bailleur'},
+      {i:'🔖', t:'Timbres fiscaux', d:'Obligatoires pour la légalisation'},
+      {i:'👥', t:'Témoins', d:'Deux témoins avec leurs CNI si souhaité'},
+    ],
+    note:'Un bail légalisé protège aussi bien le locataire que le propriétaire.'
+  },
+  duplicatas: {
+    icon:'📑', title:'Duplicatas de Documents', price:'',
+    badge:'Documents obligatoires',
+    docs:[
+      {i:'📝', t:'Demande manuscrite', d:'Expliquant la perte ou destruction du document'},
+      {i:'🪪', t:'Copie de la CNI', d:'Du demandeur'},
+      {i:'📰', t:'Déclaration de perte', d:'Faite auprès de la police ou gendarmerie'},
+      {i:'🔖', t:'Timbre fiscal', d:''},
+      {i:'📸', t:'Photos d\'identité', d:'Si requis selon le document'},
+    ],
+    note:'Le duplicata a la même valeur juridique que le document original.'
+  },
+  rccm: {
+    icon:'🏢', title:'RCCM – Registre du Commerce et du Crédit Mobilier', price:'',
+    badge:'Documents obligatoires',
+    docs:[
+      {i:'🪪', t:'Copie de la CNI ou du passeport', d:''},
+      {i:'📝', t:'Demande d\'immatriculation RCCM', d:''},
+      {i:'🗺️', t:'Plan de localisation de l\'activité', d:''},
+      {i:'📜', t:'Déclaration sur l\'honneur de non-condamnation et non-faillite', d:''},
+      {i:'🏠', t:'Justificatif de domicile', d:''},
+      {i:'📸', t:'Photo d\'identité', d:''},
+      {i:'💳', t:'Paiement des frais d\'immatriculation', d:''},
+    ],
+    note:'Le RCCM donne une existence légale à votre activité et est indispensable pour ouvrir un compte bancaire et signer des contrats.'
+  },
+  licence: {
+    icon:'📜', title:'Licence ou Autorisation d\'Exercice', price:'',
+    badge:'Documents obligatoires',
+    docs:[
+      {i:'🏢', t:'Registre de commerce (RCCM)', d:''},
+      {i:'🧾', t:'Numéro contribuable', d:''},
+      {i:'👔', t:'Statuts de l\'entreprise', d:'Si société'},
+      {i:'📝', t:'Demande timbrée', d:''},
+      {i:'🪪', t:'Copie de la CNI', d:''},
+      {i:'🗺️', t:'Plan de localisation', d:''},
+      {i:'🏠', t:'Certificat de domicile', d:''},
+      {i:'⚖️', t:'Casier judiciaire', d:''},
+    ],
+    note:'Ce document est délivré uniquement par l\'autorité compétente, conformément à la réglementation en vigueur.'
+  },
+  mariage: {
+    icon:'💍', title:'Acte de Mariage', price:'60 000 FCFA',
+    badge:'Documents obligatoires',
+    docs:[
+      {i:'📋', t:'Extrait d\'acte de naissance récent', d:'Moins de 3 mois — pour chacun des deux époux'},
+      {i:'🪪', t:'Photocopie CNI ou passeport', d:'Pour chacun des deux époux'},
+      {i:'💍', t:'Certificat de célibat', d:'Ou non-remariage'},
+      {i:'🏠', t:'Certificat de résidence / domicile', d:''},
+      {i:'🏥', t:'Certificat médical prénuptial', d:''},
+      {i:'📸', t:'Photos', d:'Souvent demandées selon la mairie'},
+      {i:'👥', t:'2 témoins minimum', d:'Avec leurs CNI'},
+    ],
+    special:[
+      {title:'Cas particuliers', items:[
+        {i:'⚖️', t:'Divorcé(e)', d:'Jugement de divorce'},
+        {i:'🕊️', t:'Veuf(ve)', d:'Acte de décès du conjoint'},
+        {i:'📋', t:'Pas d\'acte de naissance', d:'Jugement supplétif'},
+      ]}
+    ]
+  },
+  impot: {
+    icon:'🧾', title:'Déclaration / Attestation Fiscale', price:'',
+    badge:'Documents obligatoires',
+    docs:[
+      {i:'🪪', t:'Copie de la CNI', d:''},
+      {i:'🧾', t:'Numéro de contribuable', d:'Si déjà enregistré'},
+      {i:'📝', t:'Demande manuscrite', d:'Adressée au centre des impôts compétent'},
+      {i:'🏢', t:'RCCM', d:'Pour les entreprises'},
+      {i:'💳', t:'Carte de contribuable', d:'Pour les entreprises'},
+      {i:'🔖', t:'Timbre fiscal', d:''},
+    ],
+    note:'Toute activité commerciale au Cameroun est soumise aux obligations fiscales.'
+  },
+  legalisation: {
+    icon:'✅', title:'Légalisation d\'une Association', price:'145 000 F',
+    badge:'Documents obligatoires',
+    docs:[
+      {i:'📝', t:'Demande de déclaration', d:'Adressée au Préfet/Sous-préfet'},
+      {i:'📜', t:'Statuts signés de l\'association', d:''},
+      {i:'📋', t:'Procès-verbal (PV) de l\'assemblée constitutive', d:''},
+      {i:'👥', t:'Liste des membres fondateurs', d:'Identité complète + signatures'},
+      {i:'🪪', t:'Copie des pièces d\'identité des responsables', d:''},
+      {i:'🏛️', t:'Composition du bureau', d:'Président, Secrétaire Général, Trésorier'},
+      {i:'🗺️', t:'Plan/localisation du siège', d:''},
+    ],
+    note:'Une association légalisée peut avoir son propre nom, son propre compte bancaire — c\'est une voix reconnue et une action protégée.'
+  },
+  certificat: {
+    icon:'📜', title:'Certificat de Résidence / Domicile', price:'',
+    badge:'Documents obligatoires',
+    docs:[
+      {i:'🪪', t:'Copie de la CNI', d:''},
+      {i:'📝', t:'Demande manuscrite', d:'Adressée au Chef de quartier ou à la mairie'},
+      {i:'🏠', t:'Justificatif de domicile', d:'Facture d\'eau, électricité ou contrat de bail'},
+      {i:'🔖', t:'Timbre fiscal', d:''},
+      {i:'👥', t:'Témoins du quartier', d:'Si requis par le chef de quartier'},
+    ],
+    note:'Le certificat de résidence est souvent exigé pour les démarches administratives, scolaires et bancaires.'
+  },
+  attestation: {
+    icon:'📝', title:'Attestation de Non Redevance', price:'',
+    badge:'Documents obligatoires',
+    special:[
+      {title:'Cas d\'un particulier', items:[
+        {i:'🪪', t:'Copie CNI', d:''},
+        {i:'📝', t:'Demande manuscrite', d:''},
+        {i:'🧾', t:'Numéro contribuable', d:'Si existant'},
+        {i:'🔖', t:'Timbre fiscal', d:''},
+      ]},
+      {title:'Cas d\'une activité / entreprise', items:[
+        {i:'🏢', t:'RCCM', d:''},
+        {i:'💳', t:'Carte contribuable', d:''},
+        {i:'📝', t:'Demande manuscrite', d:''},
+        {i:'📊', t:'Déclarations fiscales récentes', d:''},
+      ]}
+    ],
+    note:'Utilisée pour : création d\'entreprise, dossiers administratifs, marchés publics, certains recrutements et partenariats.'
+  },
+  terrain: {
+    icon:'🏡', title:'Titre Foncier / Certificat de Terrain', price:'',
+    badge:'Documents obligatoires',
+    docs:[
+      {i:'📝', t:'Demande d\'immatriculation', d:'Adressée au Conservateur de la Propriété Foncière'},
+      {i:'🪪', t:'CNI du demandeur', d:'Copie + original'},
+      {i:'🗺️', t:'Plan topographique', d:'Établi par un géomètre agréé'},
+      {i:'📜', t:'Acte de vente ou de donation', d:'Légalisé'},
+      {i:'🏛️', t:'Attestation de non-litige', d:'Délivrée par le chef de village ou quartier'},
+      {i:'💳', t:'Paiement des droits d\'enregistrement et frais', d:''},
+    ],
+    note:'Le titre foncier est le seul document qui garantit la propriété légale d\'un terrain au Cameroun.'
+  },
+  immatriculation: {
+    icon:'🚗', title:'Immatriculation de Véhicule', price:'',
+    badge:'Documents obligatoires',
+    docs:[
+      {i:'🪪', t:'CNI du propriétaire', d:'Copie + original'},
+      {i:'🚗', t:'Carte grise originale', d:'Si mutation / changement de propriétaire'},
+      {i:'📝', t:'Acte de vente légalisé', d:'Pour les véhicules d\'occasion'},
+      {i:'🔍', t:'Certificat de visite technique', d:'En cours de validité'},
+      {i:'🛡️', t:'Attestation d\'assurance', d:'En cours de validité'},
+      {i:'💳', t:'Paiement des taxes et frais', d:''},
+      {i:'📸', t:'Photos du véhicule', d:''},
+    ],
+    note:'Tout véhicule circulant au Cameroun doit être immatriculé et assuré.'
+  },
+  voie: {
+    icon:'🛣️', title:'Occupation Temporaire de la Voie Publique', price:'50 000 F CFA',
+    badge:'Dossier administratif obligatoire',
+    docs:[
+      {i:'📝', t:'Demande manuscrite timbrée', d:'Adressée au Maire / Délégué du gouvernement'},
+      {i:'🪪', t:'Copie de la CNI', d:'En cours de validité'},
+      {i:'🗺️', t:'Plan de localisation précis', d:'Route, trottoir, carrefour...'},
+      {i:'📋', t:'Description détaillée de l\'activité', d:'Vente, chantier, événement, dépôt de matériaux...'},
+      {i:'📅', t:'Durée d\'occupation', d:'Dates exactes (début et fin)'},
+    ],
+    note:'Le montant peut varier selon la durée, l\'activité, la surface occupée et le lieu choisi.'
+  },
+  arme: {
+    icon:'🔫', title:'Permis de Port d\'Arme', price:'',
+    badge:'Documents obligatoires',
+    docs:[
+      {i:'📝', t:'Demande manuscrite', d:'Adressée à l\'autorité compétente'},
+      {i:'🪪', t:'Copie de la CNI', d:''},
+      {i:'⚖️', t:'Extrait de casier judiciaire', d:'Bulletin n°3'},
+      {i:'🏥', t:'Certificat médical', d:'Aptitude physique et mentale'},
+      {i:'📋', t:'Justificatif du motif', d:'Activité professionnelle, menaces avérées...'},
+      {i:'🔖', t:'Timbres fiscaux / frais administratifs', d:''},
+      {i:'🔍', t:'Enquête de moralité', d:'Police/gendarmerie'},
+      {i:'⚖️', t:'Déclaration sur l\'honneur des droits de l\'homme', d:''},
+    ],
+    note:'Ce document ne peut être délivré qu\'en cas de force majeure par l\'autorité compétente.'
+  },
+  redaction: {
+    icon:'✍️', title:'Rédaction de Documents Juridiques', price:'',
+    badge:'Ce que nous rédigeons pour vous',
+    docs:[
+      {i:'📝', t:'Contrats commerciaux', d:'Bail, vente, prestation de services'},
+      {i:'📜', t:'Demandes administratives', d:'Courriers officiels adressés aux autorités'},
+      {i:'⚖️', t:'Mises en demeure', d:''},
+      {i:'📋', t:'Statuts d\'entreprise ou d\'association', d:''},
+      {i:'🤝', t:'Procurations', d:''},
+      {i:'📄', t:'Déclarations sur l\'honneur', d:''},
+    ],
+    note:'Contactez-nous pour tout besoin de rédaction juridique. Nos experts vous accompagnent.'
+  },
+  timbres: {
+    icon:'🔖', title:'Timbres Fiscaux', price:'',
+    badge:'À quoi servent les timbres ?',
+    docs:[
+      {i:'📝', t:'Légalisation de documents', d:'Toute demande officielle nécessite un timbre fiscal'},
+      {i:'⚖️', t:'Contrats et actes notariés', d:''},
+      {i:'🏛️', t:'Dossiers administratifs', d:'Préfecture, mairie, tribunal'},
+      {i:'🎓', t:'Dossiers scolaires et universitaires', d:''},
+      {i:'🏢', t:'Création d\'entreprise', d:'RCCM, statuts, etc.'},
+    ],
+    note:'NFC Keys vous accompagne dans l\'obtention de timbres fiscaux pour toutes vos démarches.'
+  }
+};
+
+function openModal(key) {
+  const s = services[key];
+  if (!s) return;
+  let html = `
+    <div class="modal-icon">${s.icon}</div>
+    <div class="modal-title">${s.title}</div>
+    ${s.price ? `<div class="modal-price">💰 ${s.price}</div>` : ''}
+    <div class="modal-badge">${s.badge}</div>
+  `;
+  if (s.docs && s.docs.length) {
+    html += `<div>`;
+    s.docs.forEach(d => {
+      html += `<div class="modal-item"><span>${d.i}</span><div><strong>${d.t}</strong>${d.d ? `<br><span style="color:var(--dim);font-size:.82rem">${d.d}</span>` : ''}</div></div>`;
+    });
+    html += `</div>`;
+  }
+  if (s.special) {
+    s.special.forEach(sec => {
+      html += `<div class="sub-section"><div class="sub-section-title">👉 ${sec.title}</div>`;
+      sec.items.forEach(d => {
+        html += `<div class="modal-item"><span>${d.i}</span><div><strong>${d.t}</strong>${d.d ? `<br><span style="color:var(--dim);font-size:.82rem">${d.d}</span>` : ''}</div></div>`;
+      });
+      html += `</div>`;
+    });
+  }
+  if (s.note) html += `<div class="modal-note">💡 ${s.note}</div>`;
+  html += `
+    <div class="modal-contact">
+      <a href="tel:+237652802253">📞 +237 652 80 22 53</a>
+      <a href="https://wa.me/237655608740" target="_blank">💬 WhatsApp</a>
+      <a href="mailto:contact@nfckeys.com">✉️ Email</a>
+    </div>
+  `;
+  document.getElementById('modal-body').innerHTML = html;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeOnOverlay(e) {
+  if (e.target === document.getElementById('modal')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
